@@ -48,8 +48,68 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-3 item-card" id="itemCard" data-bs-toggle="modal" data-bs-target="#fullScreenModal">
+                <div class="img-wrapper">
+                    <img src="https://www.summahealth.org/-/media/project/summahealth/website/page-content/flourish/2_18a_fl_fastfood_400x400.webp?la=en&h=400&w=400&hash=145DC0CF6234A159261389F18A36742A"
+                        alt="">
+                    <div class="overlay-content">
+                        <h5 class="text-white m-0">item name</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
+    <div class="modal fade" id="fullScreenModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content ">
+                <div class="container">
+                    <div class="modal-header border-0">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container d-flex gap-2">
+                            <div class="row py-3 g-4">
+                                <div class="col-md-4 left-side text-white">
+                                    <div class="item-img">
+                                        <img class="w-100 rounded-3"
+                                            src="https://www.summahealth.org/-/media/project/summahealth/website/page-content/flourish/2_18a_fl_fastfood_400x400.webp?la=en&h=400&w=400&hash=145DC0CF6234A159261389F18A36742A"
+                                            alt="">
+                                    </div>
+                                    <h2 class="item-name fs-4">Item name</h2>
+                                </div>
+                                <div class="col-md-8 right-side text-white">
+                                    <h2>Instructions</h2>
+                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Non id totam voluptate repellat delectus similique, autem laudantium magnam officiis numquam architecto necessitatibus quam repellendus iusto dolores quaerat culpa tempore maxime.</p>
+                                    <h3><span class="fw-bolder">Area : </span>Saudi Arabian</h3>
+                                    <h3><span class="fw-bolder">Category : </span>Chicken</h3>
+                                    <div>
+                                        <h3>Recipes :</h3>
+                                        <ul class="recipes-tags list-unstyled d-flex g-3 flex-wrap">
+                                            <li class="alert alert-info m-2 p-1">400g Chicken</li>
+                                            <li class="alert alert-info m-2 p-1">1 cup Rice</li>
+                                            <li class="alert alert-info m-2 p-1">1 Green Pepper</li>
+                                            <li class="alert alert-info m-2 p-1">1 Red Pepper</li>
+                                            <li class="alert alert-info m-2 p-1">2 Mushrooms</li>
+                                        </ul>
+                                        <h3>Tags :</h3>
+                                        <a target="_blank" href="#" class="btn btn-success">Source</a>
+                                        <a target="_blank" href="#" class="btn btn-danger">Youtube</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./js/main.js"></script>
 </body>

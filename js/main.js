@@ -11,11 +11,16 @@ toggleBtn.addEventListener("click", () => {
     setTimeout(() => {
       sidebarContent.classList.add("show-links");
     }, 50);
-
   } else {
     setTimeout(() => {
       sidebar.classList.remove("open");
       hamburger.classList.remove("is-active");
     }, 0);
   }
+});
+
+let itemCard = document.getElementById("itemCard");
+
+itemCard.addEventListener("click", function () {
+  console.log(itemCard);
 });
