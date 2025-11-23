@@ -1,9 +1,4 @@
-// =====================
 // SIDEBAR
-// =====================
-// =====================
-// SIDEBAR TOGGLE
-// =====================
 const sidebar = document.getElementById("sidebar");
 const toggleBtn = document.getElementById("toggleBtn");
 const hamburger = document.getElementById("hamburgerIcon");
@@ -20,9 +15,6 @@ toggleBtn.addEventListener("click", () => {
   }
 });
 
-// =====================
-// CLOSE SIDEBAR WHEN CLICKING ANY LINK
-// =====================
 document.querySelectorAll(".sidebar-content a").forEach((link) => {
   link.addEventListener("click", () => {
     sidebar.classList.remove("open");
@@ -31,10 +23,7 @@ document.querySelectorAll(".sidebar-content a").forEach((link) => {
   });
 });
 
-
-// =====================
 // FETCH MEALS ON LOAD
-// =====================
 async function getMeals() {
   const res = await fetch(
     "https://www.themealdb.com/api/json/v1/1/search.php?s="
@@ -43,9 +32,7 @@ async function getMeals() {
   displayMeals(data.meals);
 }
 
-// =====================
 // DISPLAY MEALS
-// =====================
 function displayMeals(meals) {
   const container = document.getElementById("itemsContainer");
   container.innerHTML = "";
@@ -64,7 +51,7 @@ function displayMeals(meals) {
       <div class="img-wrapper">
         <img src="${meal.strMealThumb}" alt="">
         <div class="overlay-content">
-          <h5 class="text-white m-0">${meal.strMeal}</h5>
+          <h5 class="text-white m-0 fs-4 fw-bolder">${meal.strMeal}</h5>
         </div>
       </div>
     `;
@@ -81,9 +68,7 @@ function displayMeals(meals) {
   });
 }
 
-// =====================
 // GET MEAL DETAILS
-// =====================
 async function getMealDetails(id) {
   const res = await fetch(
     `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
@@ -92,19 +77,27 @@ async function getMealDetails(id) {
   displayMealDetails(data.meals[0]);
 }
 
-// =====================
 // DISPLAY MEAL DETAILS
-// =====================
 function displayMealDetails(meal) {
-  document.querySelector(".left-side img").src = meal.strMealThumb;
-  document.querySelector(".item-name").textContent = meal.strMeal;
-  document.querySelector(".right-side p").textContent = meal.strInstructions;
+  const sourceBtn = document.getElementById("sourceBtn");
+  const youtubeBtn = document.getElementById("youtubeBtn");
+
+  document.querySelector(".left-side img").src = meal.strMealThumb || "";
+  document.querySelector(".item-name").textContent = meal.strMeal || "No Name";
+  document.querySelector(".right-side p").textContent =
+    meal.strInstructions || "No Instructions";
+
   document.querySelector(
     ".right-side h3:nth-of-type(1)"
-  ).innerHTML = `<span class="fw-bolder">Area : </span>${meal.strArea}`;
+  ).innerHTML = `<span class="fw-bolder">Area : </span>${
+    meal.strArea || "Unknown"
+  }`;
+
   document.querySelector(
     ".right-side h3:nth-of-type(2)"
-  ).innerHTML = `<span class="fw-bolder">Category : </span>${meal.strCategory}`;
+  ).innerHTML = `<span class="fw-bolder">Category : </span>${
+    meal.strCategory || "Unknown"
+  }`;
 
   const recipesList = document.querySelector(".recipes-tags");
   recipesList.innerHTML = "";
@@ -114,21 +107,39 @@ function displayMealDetails(meal) {
     if (ingredient && ingredient.trim()) {
       const li = document.createElement("li");
       li.classList.add("alert", "alert-info", "m-2", "p-1");
-      li.textContent = `${measure} ${ingredient}`;
+      li.textContent = `${measure || ""} ${ingredient}`;
       recipesList.appendChild(li);
     }
   }
 
-  document.querySelector(".btn-success").href = meal.strSource || "#";
-  document.querySelector(".btn-danger").href = meal.strYoutube || "#";
+  if (
+    meal.strSource &&
+    meal.strSource.trim() !== "" &&
+    meal.strSource.startsWith("http")
+  ) {
+    sourceBtn.href = meal.strSource;
+    sourceBtn.target = "_blank";
+    sourceBtn.style.display = "inline-block";
+  } else {
+    sourceBtn.style.display = "none";
+  }
+
+  if (
+    meal.strYoutube &&
+    meal.strYoutube.trim() !== "" &&
+    meal.strYoutube.startsWith("http")
+  ) {
+    youtubeBtn.href = meal.strYoutube;
+    youtubeBtn.target = "_blank";
+    youtubeBtn.style.display = "inline-block";
+  } else {
+    youtubeBtn.style.display = "none";
+  }
 }
 
-// =====================
-// SIDEBAR LINKS WITHOUT DUPLICATION
-// =====================
+// SIDEBAR LINKS
 const sidebarLinks = document.querySelectorAll(".sidebar-content a");
 
-// Search
 sidebarLinks[0].addEventListener("click", (e) => {
   e.preventDefault();
   hideContactForm();
@@ -136,7 +147,6 @@ sidebarLinks[0].addEventListener("click", (e) => {
   showSearchSection();
 });
 
-// Categories
 sidebarLinks[1].addEventListener("click", (e) => {
   e.preventDefault();
   hideContactForm();
@@ -144,7 +154,6 @@ sidebarLinks[1].addEventListener("click", (e) => {
   showCategories();
 });
 
-// Areas
 sidebarLinks[2].addEventListener("click", (e) => {
   e.preventDefault();
   hideContactForm();
@@ -152,7 +161,6 @@ sidebarLinks[2].addEventListener("click", (e) => {
   showAreas();
 });
 
-// Ingredients / Random
 sidebarLinks[3].addEventListener("click", (e) => {
   e.preventDefault();
   hideContactForm();
@@ -160,7 +168,6 @@ sidebarLinks[3].addEventListener("click", (e) => {
   showIngredients();
 });
 
-// Contact Form
 sidebarLinks[4].addEventListener("click", (e) => {
   e.preventDefault();
   hideSearch();
@@ -168,9 +175,7 @@ sidebarLinks[4].addEventListener("click", (e) => {
   showContactForm();
 });
 
-// =====================
 // HELPER FUNCTIONS
-// =====================
 function hideSearch() {
   const searchSection = document.getElementById("searchSection");
   searchSection.style.display = "none";
@@ -223,9 +228,7 @@ function showSearchSection() {
     });
 }
 
-// =====================
 // SEARCH FUNCTIONS
-// =====================
 async function searchByName(term) {
   const res = await fetch(
     `https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`
@@ -243,9 +246,7 @@ async function searchByFirstLetter(letter) {
   displayMeals(data.meals || []);
 }
 
-// =====================
 // CATEGORIES & AREAS
-// =====================
 async function showCategories() {
   const res = await fetch(
     "https://www.themealdb.com/api/json/v1/1/list.php?c=list"
@@ -316,9 +317,7 @@ async function showAreas() {
   }
 }
 
-// =====================
 // FETCH BY CATEGORY / AREA
-// =====================
 async function fetchMealsByCategory(category) {
   const res = await fetch(
     `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
@@ -335,109 +334,114 @@ async function fetchMealsByArea(area) {
   displayMeals(data.meals || []);
 }
 
-// =====================
-// SHOW MAIN INGREDIENTS (LIMITED TO MAIN ONES WITH DESCRIPTION)
-// =====================
+// MAIN INGREDIENTS WITH DESCRIPTION
 async function showIngredients() {
-    hideSearch();
-    hideContactForm();
+  hideSearch();
+  hideContactForm();
 
-    const container = document.getElementById("itemsContainer");
-    container.innerHTML = "";
+  const container = document.getElementById("itemsContainer");
+  container.innerHTML = "";
 
-    const mainIngredients = [
-        "Chicken",
-        "Salmon",
-        "Beef",
-        "Pork",
-        "Avocado",
-        "Apple Cider Vinegar",
-        "Asparagus",
-        "Aubergine",
-        "Baby Plum Tomatoes",
-        "Bacon",
-        "Baking Powder",
-        "Balsamic Vinegar",
-        "Basil",
-        "Basil Leaves",
-        "Basmati Rice",
-        "Bay Leaf",
-        "Bay Leaves",
-        "Beef Brisket",
-        "Beef Fillet",
-        "Beef Gravy",
-    ];
+  const mainIngredients = [
+    "Chicken",
+    "Salmon",
+    "Beef",
+    "Pork",
+    "Avocado",
+    "Apple Cider Vinegar",
+    "Asparagus",
+    "Aubergine",
+    "Baby Plum Tomatoes",
+    "Bacon",
+    "Baking Powder",
+    "Balsamic Vinegar",
+    "Basil",
+    "Basil Leaves",
+    "Basmati Rice",
+    "Bay Leaf",
+    "Bay Leaves",
+    "Beef Brisket",
+    "Beef Fillet",
+    "Beef Gravy",
+  ];
 
-    const ingredientDescriptions = {
-        "Chicken": "A domesticated bird widely consumed worldwide, versatile in cooking, roasted, grilled, or in stews.",
-        "Salmon": "A fatty fish rich in omega-3s, often baked, grilled, smoked, or used in sushi and salads.",
-        "Beef": "Meat from cattle, used in countless recipes, including steaks, roasts, and minced dishes globally.",
-        "Pork": "Meat from domestic pigs, commonly cooked roasted, grilled, or used in bacon, sausages, and stews.",
-        "Avocado": "A creamy fruit high in healthy fats, commonly used in salads, spreads, guacamole, and smoothies.",
-        "Apple Cider Vinegar": "Fermented apple juice with acidic flavor, often used in dressings, marinades, and natural remedies.",
-        "Asparagus": "Green stalk vegetable, tender when steamed or grilled, commonly served with olive oil, butter, or sauces.",
-        "Aubergine": "Also known as eggplant, a versatile vegetable, roasted, grilled, or used in stews and Mediterranean dishes.",
-        "Baby Plum Tomatoes": "Small, sweet tomatoes ideal for salads, roasting, sauces, or snacking, rich in flavor and vitamins.",
-        "Bacon": "Salt-cured pork slices, typically fried or baked, adds savory, smoky flavor to breakfast and dishes.",
-        "Baking Powder": "Chemical leavening agent used in baking to make cakes, muffins, and pastries light and fluffy.",
-        "Balsamic Vinegar": "Dark, concentrated vinegar from Italy, with a sweet, tangy flavor perfect for dressings and marinades.",
-        "Basil": "A fragrant herb used in cooking, especially Italian cuisine, for sauces, salads, and flavoring dishes.",
-        "Basil Leaves": "Fresh or dried leaves of basil plant, aromatic, used to enhance soups, sauces, and salads.",
-        "Basmati Rice": "Long-grain aromatic rice from Indian subcontinent, fluffy and fragrant when cooked, ideal with curries.",
-        "Bay Leaf": "Aromatic leaf used in cooking to flavor soups, stews, and sauces, removed before serving.",
-        "Bay Leaves": "Multiple aromatic leaves added to slow-cooked dishes to impart subtle earthy and herbal flavor.",
-        "Beef Brisket": "Cut of beef from chest, slow-cooked, smoked or braised, tender and flavorful for various dishes.",
-        "Beef Fillet": "Prime tender cut of beef, ideal for steaks or roasting, known for delicate texture and flavor.",
-        "Beef Gravy": "Savory sauce made from beef drippings and stock, perfect to enhance meats, potatoes, and dishes."
-    };
+  const ingredientDescriptions = {
+    Chicken:
+      "A domesticated bird widely consumed worldwide, versatile in cooking, roasted, grilled, or in stews.",
+    Salmon:
+      "A fatty fish rich in omega-3s, often baked, grilled, smoked, or used in sushi and salads.",
+    Beef: "Meat from cattle, used in countless recipes, including steaks, roasts, and minced dishes globally.",
+    Pork: "Meat from domestic pigs, commonly cooked roasted, grilled, or used in bacon, sausages, and stews.",
+    Avocado:
+      "A creamy fruit high in healthy fats, commonly used in salads, spreads, guacamole, and smoothies.",
+    "Apple Cider Vinegar":
+      "Fermented apple juice with acidic flavor, often used in dressings, marinades, and natural remedies.",
+    Asparagus:
+      "Green stalk vegetable, tender when steamed or grilled, commonly served with olive oil, butter, or sauces.",
+    Aubergine:
+      "Also known as eggplant, a versatile vegetable, roasted, grilled, or used in stews and Mediterranean dishes.",
+    "Baby Plum Tomatoes":
+      "Small, sweet tomatoes ideal for salads, roasting, sauces, or snacking, rich in flavor and vitamins.",
+    Bacon:
+      "Salt-cured pork slices, typically fried or baked, adds savory, smoky flavor to breakfast and dishes.",
+    "Baking Powder":
+      "Chemical leavening agent used in baking to make cakes, muffins, and pastries light and fluffy.",
+    "Balsamic Vinegar":
+      "Dark, concentrated vinegar from Italy, with a sweet, tangy flavor perfect for dressings and marinades.",
+    Basil:
+      "A fragrant herb used in cooking, especially Italian cuisine, for sauces, salads, and flavoring dishes.",
+    "Basil Leaves":
+      "Fresh or dried leaves of basil plant, aromatic, used to enhance soups, sauces, and salads.",
+    "Basmati Rice":
+      "Long-grain aromatic rice from Indian subcontinent, fluffy and fragrant when cooked, ideal with curries.",
+    "Bay Leaf":
+      "Aromatic leaf used in cooking to flavor soups, stews, and sauces, removed before serving.",
+    "Bay Leaves":
+      "Multiple aromatic leaves added to slow-cooked dishes to impart subtle earthy and herbal flavor.",
+    "Beef Brisket":
+      "Cut of beef from chest, slow-cooked, smoked or braised, tender and flavorful for various dishes.",
+    "Beef Fillet":
+      "Prime tender cut of beef, ideal for steaks or roasting, known for delicate texture and flavor.",
+    "Beef Gravy":
+      "Savory sauce made from beef drippings and stock, perfect to enhance meats, potatoes, and dishes.",
+  };
 
-    mainIngredients.forEach(ingredient => {
-        const thumb = `https://www.themealdb.com/images/ingredients/${ingredient}-Small.png`;
+  mainIngredients.forEach((ingredient) => {
+    const thumb = `https://www.themealdb.com/images/ingredients/${ingredient}-Small.png`;
 
-        const div = document.createElement("div");
-        div.classList.add("col-3", "item-card", "mb-3");
-        div.innerHTML = `
-            <div class="img-wrapper text-center bg-dark p-2 rounded position-relative overflow-hidden">
-                <img src="${thumb}" alt="${ingredient}" class="img-fluid mb-2">
-                <h5 class="text-white m-0">${ingredient}</h5>
-                <div class="ingredient-desc position-absolute text-white p-2">${ingredientDescriptions[ingredient]}</div>
-            </div>
-        `;
+    const div = document.createElement("div");
+    div.classList.add("col-3", "item-card", "mb-3");
+    div.innerHTML = `
+      <div class="img-wrapper text-center bg-dark p-2 rounded position-relative overflow-hidden">
+        <img src="${thumb}" alt="${ingredient}" class="img-fluid mb-2">
+        <h5 class="text-white m-0">${ingredient}</h5>
+        <div class="ingredient-desc position-absolute text-white p-2">${ingredientDescriptions[ingredient]}</div>
+      </div>
+    `;
 
-        // لما يدوس على المكون نجيب الأكلات المرتبطة بيه
-        div.addEventListener("click", () => fetchMealsByIngredient(ingredient));
-        container.appendChild(div);
-    });
+    div.addEventListener("click", () => fetchMealsByIngredient(ingredient));
+    container.appendChild(div);
+  });
 }
 
-// =====================
-// FETCH MEALS BY INGREDIENT
-// =====================
 async function fetchMealsByIngredient(ingredient) {
-    const res = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`);
-    const data = await res.json();
-    displayMeals(data.meals || []);
+  const res = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`
+  );
+  const data = await res.json();
+  displayMeals(data.meals || []);
 }
 
-// =====================
-// BINDING TO SIDEBAR LINK
-// =====================
-document.querySelector(".sidebar-content a:nth-child(4)")
-    .addEventListener("click", showIngredients);
+document
+  .querySelector(".sidebar-content a:nth-child(4)")
+  .addEventListener("click", showIngredients);
 
-
-
-// =====================
 // CONTACT FORM VALIDATION
-// =====================
 const contactForm = document.getElementById("contactForm");
-
-// Regex rules
 const nameRegex = /^[A-Za-z\s]{2,30}$/;
 const ageRegex = /^(?:1[01][0-9]|120|[1-9][0-9]?)$/;
 const phoneRegex = /^[0-9]{10,}$/;
 
-// Error messages
 const errorMessages = {
   name: "Name must be letters only (2-30 characters)",
   age: "Age must be between 1 and 120",
@@ -447,7 +451,6 @@ const errorMessages = {
   confirmPassword: "Passwords do not match",
 };
 
-// Validation function
 function validateInput(input) {
   let valid = true;
   const value = input.value.trim();
@@ -462,7 +465,6 @@ function validateInput(input) {
     valid = value === password && value.length >= 6;
   }
 
-  // Remove old feedback
   let feedback = input.nextElementSibling;
   if (feedback && feedback.classList.contains("invalid-feedback"))
     feedback.remove();
@@ -473,7 +475,6 @@ function validateInput(input) {
   } else {
     input.classList.remove("is-valid");
     input.classList.add("is-invalid");
-
     const div = document.createElement("div");
     div.className = "invalid-feedback";
     div.textContent = errorMessages[input.id];
@@ -483,12 +484,10 @@ function validateInput(input) {
   return valid;
 }
 
-// Validate on blur
 contactForm.querySelectorAll("input").forEach((input) => {
   input.addEventListener("blur", () => validateInput(input));
 });
 
-// Validate on submit
 contactForm.addEventListener("submit", function (e) {
   e.preventDefault();
   let allValid = true;
@@ -505,7 +504,5 @@ contactForm.addEventListener("submit", function (e) {
   }
 });
 
-// =====================
 // INITIAL LOAD
-// =====================
 getMeals();
