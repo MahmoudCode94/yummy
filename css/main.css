@@ -17,7 +17,9 @@ body {
     background: #111;
     z-index: 10000;
 }
-
+.p-1{
+    padding: .4rem !important;
+}
 .sidebar-left {
     width: 320px;
     background: #111;
@@ -193,4 +195,101 @@ body {
 }
 .modal.fade .modal-dialog {
     transform: none !important;
+}
+#contactForm {
+    background-color: #222;
+}
+#searchSection {
+    display: none;
+    background-color: #222;
+    padding:0 1.5rem 1.5rem;
+    border-radius: 0.75rem;
+    margin-bottom: 2rem;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#searchSection input {
+    background-color: #343a40;
+    color: #fff;
+    border: 1px solid #6c757d;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+#searchSection input:focus {
+    border-color: #0d6efd;
+    outline: none;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    background-color: #495057;
+}
+/* ===================== */
+/* ITEMS RESPONSIVE GRID */
+/* ===================== */
+#itemsContainer .item-card {
+    cursor: pointer;
+}
+
+
+.ingredient-desc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top:0;
+    background: rgba(0, 0, 0, 0.85);
+    font-size: 0.85rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.img-wrapper:hover .ingredient-desc {
+    opacity: 1;
+}
+
+
+
+
+@media (max-width: 767px) {
+    #itemsContainer .col-3 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    #itemsContainer .col-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (min-width: 992px) {
+    #itemsContainer .col-3 {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+}
+
+#fullScreenModal .left-side img {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+}
+
+#fullScreenModal .modal-body {
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    #fullScreenModal .modal-body {
+        flex-direction: row;
+    }
 }
