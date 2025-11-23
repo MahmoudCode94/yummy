@@ -2,9 +2,11 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #333;
-    padding:80px 0 0 80px;
+    padding:40px 0 0 80px;
 }
-
+.p-1{
+    padding: .4rem !important;
+}
 .sidebar {
     position: fixed;
     top: 0;
@@ -17,9 +19,7 @@ body {
     background: #111;
     z-index: 10000;
 }
-.p-1{
-    padding: .4rem !important;
-}
+
 .sidebar-left {
     width: 320px;
     background: #111;
@@ -262,7 +262,62 @@ body {
         flex: 0 0 100%;
         max-width: 100%;
     }
+    .sidebar {
+        width: 270px;
+        transform: translateX(-220px);
+    }
+
+    .sidebar-left {
+        width: 220px;
+        padding: 12px;
+    }
+
+    .sidebar-right {
+        width: 50px;
+        padding: 0 8px;
+    }
+
+    .sidebar-content a {
+        font-size: 1rem !important;
+        padding: 6px 0 6px 8px;
+        margin: 5px;
+    }
+
+    .sidebar footer {
+        font-size: .75rem !important ;
+    }
+    .sidebar footer i{
+        font-size: .75rem !important ;
+    }
+
+    .toggle-btn {
+        height: 30px;
+    }
+
+    .hamburger {
+        width: 25px;
+        height: 12px;
+    }
+
+    .hamburger span {
+        height: 2px;
+    }
+
+    .sidebar-content.show-links a {
+        transform: translateY(0);
+    }
+    body {
+        padding-left: 50px;
+    }
+    .modal-dialog {
+        padding-left: 50px;
+    }
+    #contactFormContainer {
+        margin: 0 !important;
+    }
 }
+
+
 
 @media (min-width: 768px) and (max-width: 991px) {
     #itemsContainer .col-3 {
